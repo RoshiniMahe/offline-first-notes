@@ -1,0 +1,29 @@
+{
+  "notes": [
+    {
+      "id": "e2a3b4c5-d6e7-f8g9-h0i1-2345678901cd",
+      "title": "Meeting Notes - Project X",
+      "body": "Discussed the new architecture. Need to finalize the tech stack by Friday. Assigned tasks to the backend team.",
+      "version": 2,
+      "updatedAt": "2026-08-02T14:30:00.000Z",
+      "isDeleted": false
+    },
+    {
+      "id": "ddgZtjj3h24",
+      "title": "test mob desk 3",
+      "body": "test",
+      "version": 4,
+      "updatedAt": "2026-08-04T00:08:12.575258",
+      "isDeleted": false
+    },
+    {
+      "id": "g_6R4J2Axlo",
+      "title": "shopping",
+      "body": "hee",
+      "version": 2,
+      "updatedAt": "2026-08-04T00:12:12.423480",
+      "isDeleted": false
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
