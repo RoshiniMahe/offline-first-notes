@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import '../../domain/usecases/sync_notes.dart';
+import 'package:offline_first/domain/usecases/sync_notes.dart';
 
 part 'sync_event.dart';
 part 'sync_state.dart';

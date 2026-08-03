@@ -15,10 +15,6 @@ void main() async {
   Hive.registerAdapter(SyncStatusModelAdapter());
   Hive.registerAdapter(NoteModelAdapter());
 
-  // One-time clear of corrupted local data from previous broken syncs.
-  // Uses deleteBoxFromDisk BEFORE opening the box — this also removes
-  // any stale .lock files that would cause a FileSystemException.
-  // Remove this block after all devices have been restarted once.
   final flagBox = await Hive.openBox('app_flags');
   if (flagBox.get('sync_data_reset_v1', defaultValue: false) == false) {
     await Hive.deleteBoxFromDisk('notes_box');

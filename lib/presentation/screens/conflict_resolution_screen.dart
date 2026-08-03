@@ -2,18 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:dio/dio.dart';
-import '../../domain/entities/note.dart';
-import '../../data/models/note_model.dart';
-import '../blocs/note_bloc.dart';
+import 'package:offline_first/domain/entities/note.dart';
+import 'package:offline_first/data/models/note_model.dart';
+import 'package:offline_first/presentation/blocs/note_bloc.dart';
 
 class ConflictResolutionScreen extends StatelessWidget {
 
-  final Note note; // The local conflicting note. Need to fetch the remote note, but we only have local in state.
-  // Wait, the repository marked it as conflict because it saw a newer version on server.
-  // To show "My Changes" vs "Server Version", we need both.
-  // The L_v was updated to S_v locally when conflict happened? No, we kept L_v.
-  // For this assignment, let's assume `note` is local, and we fetch server version directly here,
-  // or the repository could have saved both. Since we didn't save both, we will fetch the server note by ID here.
+  final Note note;
 
   const ConflictResolutionScreen({Key? key, required this.note}) : super(key: key);
 
@@ -33,11 +28,6 @@ class ConflictResolutionScreen extends StatelessWidget {
         iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: FutureBuilder<Note>(
-        // Ideally we should have a usecase to fetch remote note by ID.
-        // For simplicity, we just use the API directly via dependency injection or a specific usecase.
-        // Let's create a quick function or inject a remote fetcher.
-        // Actually, since I didn't add a GetRemoteNote usecase, I can just use a fake remote note for UI preview
-        // or add the usecase quickly.
         future: _fetchRemoteNote(context),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -99,7 +89,6 @@ class ConflictResolutionScreen extends StatelessWidget {
                 
                 ElevatedButton(
                   onPressed: () {
-                    // Keep my changes (we increment local version so it overrides server)
                     final resolvedNote = note.copyWith(version: serverNote.version + 1);
                     context.read<NoteBloc>().add(ResolveNoteConflict(resolvedNote));
                     Navigator.pop(context);
@@ -115,7 +104,6 @@ class ConflictResolutionScreen extends StatelessWidget {
                 const SizedBox(height: 12),
                 OutlinedButton(
                   onPressed: () {
-                    // Keep server version
                     final resolvedNote = serverNote;
                     context.read<NoteBloc>().add(ResolveNoteConflict(resolvedNote));
                     Navigator.pop(context);
@@ -131,7 +119,6 @@ class ConflictResolutionScreen extends StatelessWidget {
                 const SizedBox(height: 12),
                 TextButton(
                   onPressed: () {
-                    // Merge both
                     final resolvedNote = note.copyWith(
                       version: serverNote.version + 1,
                       body: '${note.body}\n\n--- Server Appended ---\n\n${serverNote.body}',

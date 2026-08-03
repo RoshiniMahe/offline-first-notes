@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:offline_first/presentation/blocs/note_bloc.dart';
 import 'package:uuid/uuid.dart';
-import '../../domain/entities/note.dart';
-import '../blocs/note_bloc.dart';
+import 'package:offline_first/domain/entities/note.dart';
 
 class AddEditNoteScreen extends StatefulWidget {
   final Note? note;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../domain/entities/note.dart';
+import 'package:offline_first/domain/entities/note.dart';
 import 'package:intl/intl.dart';
 import '../widgets/sync_status_badge.dart';
 

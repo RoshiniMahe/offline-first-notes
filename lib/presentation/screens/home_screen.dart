@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../domain/entities/note.dart';
-import '../blocs/note_bloc.dart';
-import '../blocs/sync_bloc.dart';
-import '../widgets/note_card.dart';
+import 'package:offline_first/domain/entities/note.dart';
+import 'package:offline_first/presentation/blocs/note_bloc.dart';
+import 'package:offline_first/presentation/blocs/sync_bloc.dart';
+import 'package:offline_first/presentation/widgets/note_card.dart';
 import 'add_edit_note_screen.dart';
 import 'conflict_resolution_screen.dart';
 
@@ -94,13 +94,8 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: BlocConsumer<NoteBloc, NoteState>(
         listener: (context, state) {
-          if (state is NoteLoaded) {
-            final conflicts = state.notes.where((n) => n.syncStatus == SyncStatus.conflict).toList();
-            if (conflicts.isNotEmpty) {
-              // Open conflict resolution for the first conflict
-              _showConflictResolution(context, conflicts.first);
-            }
-          }
+          // No longer automatically pop up conflict resolution.
+          // Wait for the user to tap the conflicting item.
         },
         builder: (context, state) {
           if (state is NoteLoading) {
@@ -118,12 +113,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 return NoteCard(
                   note: note,
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => AddEditNoteScreen(note: note),
-                      ),
-                    );
+                    if (note.syncStatus == SyncStatus.conflict) {
+                      _showConflictResolution(context, note);
+                    } else {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => AddEditNoteScreen(note: note),
+                        ),
+                      );
+                    }
                   },
                 );
               },

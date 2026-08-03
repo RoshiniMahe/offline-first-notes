@@ -1,10 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import '../../domain/entities/note.dart';
-import '../../domain/usecases/get_notes.dart';
-import '../../domain/usecases/save_note.dart';
-import '../../domain/usecases/delete_note.dart';
-import '../../domain/usecases/resolve_conflict.dart';
+import 'package:offline_first/domain/entities/note.dart';
+import 'package:offline_first/domain/usecases/get_notes.dart';
+import 'package:offline_first/domain/usecases/save_note.dart';
+import 'package:offline_first/domain/usecases/delete_note.dart';
+import 'package:offline_first/domain/usecases/resolve_conflict.dart';
 
 part 'note_event.dart';
 part 'note_state.dart';

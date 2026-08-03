@@ -1,5 +1,5 @@
 import 'package:hive/hive.dart';
-import '../../domain/entities/note.dart';
+import 'package:offline_first/domain/entities/note.dart';
 
 part 'note_model.g.dart';
 
